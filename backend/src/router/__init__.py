@@ -1,1 +1,1 @@
-from .bulk_process_router import bulk_processing_router
+from .hospital_router import hospital_router

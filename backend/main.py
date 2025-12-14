@@ -97,7 +97,7 @@ async def healthcheck():
 # Initializing all routers with prefix.
 router_prefix = "/api"
 
-app.include_router(router.bulk_processing_router, prefix=router_prefix)
+app.include_router(router.hospital_router, prefix=router_prefix)
 
 if __name__ == '__main__':
     uvicorn.run(

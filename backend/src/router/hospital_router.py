@@ -12,4 +12,7 @@ from src.router import dependencies as dp
 from src.services.redis_service import redis_service as rs
 
 
-bulk_processing_router = APIRouter()
+hospital_router = APIRouter(
+    prefix="/v1/hospital",
+    tags=["hospital"],
+)
