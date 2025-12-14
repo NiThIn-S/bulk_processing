@@ -29,5 +29,6 @@ docker-compose down
 
 ```
 cd test
-
+uv sync
+uv run python3 test.py
 ```
