@@ -11,12 +11,12 @@ PRODUCTION = config.APP_ENV == "prod"
 
 if PRODUCTION:
     LOG_FORMAT = (
-        "%(asctime)s, [%(levelname)s] [%(process)d], name: %(name)s, ",
+        "[%(asctime)s] [%(levelname)s] [%(process)d], name: %(name)s, ",
         "message: %(message)s"
     )
 else:
     LOG_FORMAT = (
-        "%(asctime)s, [%(levelname)s] [%(process)d], name: %(name)s, "
+        "[%(asctime)s] [%(levelname)s] [%(process)d], name: %(name)s, "
         "message: %(message)s, "
         "line: %(lineno)d, path: %(pathname)s"
     )

@@ -5,7 +5,7 @@ dotenv.load_dotenv()
 
 APP_ENV = os.getenv('ENV', 'dev')
 PORT = int(os.getenv('PORT', '8000'))
-HOST = os.getenv('HOST', '0.0.0.0')
+WORKERS = int(os.getenv('WORKERS', '3'))
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
 SERVICE_NAME = os.getenv('SERVICE_NAME', 'bulk-processing')
 

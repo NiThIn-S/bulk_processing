@@ -8,9 +8,9 @@ RUN mkdir -p /app
 
 COPY pyproject.toml uv.lock* /app/
 
-RUN cd /app && uv lock && uv sync --locked
+RUN cd /app && uv sync --frozen
 
-COPY . /backend/.
+COPY . /app/
 
 EXPOSE 8000
 

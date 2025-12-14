@@ -1,4 +1,4 @@
 echo "INFO: Starting container..."
-uv run --no-project python3 main.py
+uv run python3 run_main.py
 echo "ERROR: Exiting container ..."
 sleep infinity
