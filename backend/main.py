@@ -15,7 +15,7 @@ from src.router import dependencies as dp
 from src.router import schemas
 from src.services.redis_service import redis_service as rs
 from src.services.exception_handler import register_exception
-
+from src.services.aio_http_service import get_hospital_api_session, close_hospital_api_session
 
 origins = ["*"]
 
@@ -31,23 +31,23 @@ async def lifespan(app: FastAPI):
     await rs.connect_redis()
     await rs.check_status()
     log.info("*****Connection to Redis established.*****")
+
+    await get_hospital_api_session()
     yield
 
-    # Closing db connection.
+    # Closing hospital API session.
+    await close_hospital_api_session()
+
+    # Closing Redis connection.
     await rs.disconnect_redis()
     log.warning("Application shutting down")
+
 
 if config.APP_ENV == "prod":
     openapi_url = None
 else:
     openapi_url = "/openapi.json"
-    log.warning(
-        "Non production environment - OpenAPI docs exposed",
-        extra={
-            "environment": config.APP_ENV,
-            "openapi_url": openapi_url,
-        }
-    )
+    log.warning("Non production environment - OpenAPI docs exposed")
 
 app = FastAPI(
     title=config.SERVICE_NAME,
@@ -67,29 +67,26 @@ app.add_middleware(
 )
 
 register_exception(app=app)
-log.info("Logger initialized")
+log.info("*****Logger initialized.*****")
 
 # Endpoint for liveness check.
 @app.get("/liveness", status_code=status.HTTP_200_OK)
 async def liveness():
-    res_content = {
-        "reason": ""
+    res = {
+        "status": "ok",
+        "message": "Liveness check passed",
     }
     try:
-        try:
-            await rs.check_status()
-        except Exception as e:
-            msg = "Ping failed for Redis"
-            log.error(f"Ping failed for Redis, err: {repr(e)}")
-            res_content["reason"] = msg
-            return False
+        await rs.check_status()
     except Exception as e:
-        log.error(
-            "Unexpected error in liveness check",
-            f"err: {repr(e)}"
+        log.error(f"*****Liveness check failed.*****, err: {repr(e)}")
+        res["status"] = "error"
+        res["message"] = f"Liveness check failed, err: {repr(e)}"
+        return JSONResponse(
+            content=res,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         )
-        return False
-    return True
+    return res
 
 # Endpoint for readiness check.
 @app.get("/health", status_code=status.HTTP_200_OK)
@@ -98,8 +95,8 @@ async def healthcheck():
 
 
 # Initializing all routers with prefix.
-router_prefix = "/api/v1"
-# app.include_router(router.user_api, prefix=router_prefix)
+router_prefix = "/api"
+
 app.include_router(router.bulk_processing_router, prefix=router_prefix)
 
 if __name__ == '__main__':

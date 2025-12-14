@@ -24,7 +24,6 @@ class RedisService:
         )
         self.r = redis.Redis(connection_pool=self.pool)
         self.pipe = self.r.pipeline()
-        log.info("*****Connected to Redis.*****")
 
     async def check_online(self):
         await self.r.get("dummy_test_key")
@@ -32,10 +31,9 @@ class RedisService:
     async def check_status(self):
         try:
             await self.check_online()
-            log.info("*****Sync Connection to Redis established.*****")
         except Exception as e:
-            log.error(f"*****Sync Connection to Redis failed.*****, err: {repr(e)}")
-            raise RuntimeError("Sync Connection to Redis is not established.")
+            log.error(f"*****Connection to Redis failed.*****, err: {repr(e)}")
+            raise RuntimeError("Connection to Redis is not established.")
 
     async def disconnect_redis(self):
         """Disconnect from redis."""

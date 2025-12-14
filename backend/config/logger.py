@@ -42,8 +42,6 @@ log_config = {
         "default": {
             "()": "uvicorn.logging.DefaultFormatter",
             "fmt": log_obj.log_format,
-            # "fmt": "%(levelprefix)s | %(asctime)s | %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
 
         },
     },
