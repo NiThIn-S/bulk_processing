@@ -9,6 +9,7 @@ dependencies = [
     "fastapi>=0.124.4",
     "gunicorn>=23.0.0",
     "python-dotenv>=1.2.1",
+    "python-multipart>=0.0.20",
     "redis>=7.1.0",
-    "uvicorn>=0.38.0",
+    "uvicorn[standard]>=0.38.0",
 ]

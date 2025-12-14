@@ -13,9 +13,9 @@ from config.logger import log, log_config
 from src import router
 from src.router import dependencies as dp
 from src.router import schemas
-from src.services.redis_service import redis_service as rs
-from src.services.exception_handler import register_exception
-from src.services.aio_http_service import get_hospital_api_session, close_hospital_api_session
+from src.lib.redis_service import redis_service as rs
+from src.lib.exception_handler import register_exception
+from src.lib.aio_http_service import get_hospital_api_session, close_hospital_api_session
 
 origins = ["*"]
 
@@ -105,5 +105,5 @@ if __name__ == '__main__':
         port=config.PORT,
         host='0.0.0.0',
         workers=1,
-        reload=True,
+        # reload=True,
     )

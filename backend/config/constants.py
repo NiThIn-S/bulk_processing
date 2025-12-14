@@ -20,3 +20,8 @@ else:
         "message: %(message)s, "
         "line: %(lineno)d, path: %(pathname)s"
     )
+
+MAX_HOSPITALS = 20
+CSV_TTL = 86400  # 24 hours
+STATUS_TTL = 86400  # 24 hours
+MAX_CONCURRENT_WORKERS = 4  # Number of parallel tasks to spawn at once
