@@ -19,19 +19,13 @@ class RedisService:
 
     async def connect_redis(self):
         """Establish connection to redis."""
-        if config.REDIS_URL:
-            self.pool = redis.ConnectionPool.from_url(
-                config.REDIS_URL,
-                socket_connect_timeout=10,
-            )
-        else:
-            self.pool = redis.ConnectionPool(
-                host=config.REDIS_HOST,
-                port=config.REDIS_PORT,
-                password=config.REDIS_PASSWORD,
-                username=config.REDIS_USERNAME,
-                socket_connect_timeout=10,
-            )
+        self.pool = redis.ConnectionPool(
+            host=config.REDIS_HOST,
+            port=config.REDIS_PORT,
+            password=config.REDIS_PASSWORD,
+            username=config.REDIS_USERNAME,
+            socket_connect_timeout=10,
+        )
         self.r = redis.Redis(connection_pool=self.pool)
         self.pipe = self.r.pipeline()
 
