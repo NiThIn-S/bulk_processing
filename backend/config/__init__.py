@@ -12,9 +12,12 @@ SERVICE_NAME = os.getenv('SERVICE_NAME', 'bulk-processing')
 
 REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
 REDIS_PORT = int(os.getenv('REDIS_PORT', '6379'))
+REDIS_USERNAME = os.getenv('REDIS_USERNAME', None)
 REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', None)
 if not REDIS_PASSWORD:
     REDIS_PASSWORD = None
+if not REDIS_USERNAME:
+    REDIS_USERNAME = None
 
 REDIS_KEY_PREFIX = "bulk-processing:"
 
