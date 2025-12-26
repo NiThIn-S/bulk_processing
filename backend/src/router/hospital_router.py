@@ -8,7 +8,6 @@ from fastapi import UploadFile, File, WebSocket, WebSocketDisconnect, Background
 from config.logger import log
 from config import constants as c
 from . import schemas as schema
-from src.router import dependencies as dp
 from src.lib.redis_service import redis_service as rs
 from src.router.services.hospital_service import (
     validate_csv_file,
